@@ -21,6 +21,7 @@ Guidelines:
 - Prices are in USD unless otherwise specified by the data."""
 
 _MAX_TOOLS_TO_BE_USED = 5 # 5 since this is the maximum amount of tools that we can use
+_MAX_HISTORY_MESSAGES = 20  # keep last 10 conversation turns (user+assistant pairs)
 _FALLBACK_RESPONSE = (
     "I wasn't able to complete the analysis. Please try rephrasing your question or "
     "check that the stock symbol is valid."
@@ -44,7 +45,7 @@ def run_agent(user_message: str, history: list[dict], settings: Settings) -> str
 
     messages: list = [
         {"role": "system", "content": _SYSTEM_PROMPT},
-        *history,
+        *history[-_MAX_HISTORY_MESSAGES:],
         {"role": "user", "content": user_message},
     ]
 
