@@ -3,7 +3,7 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app.finnhub.client import FinnhubClient
+    from app.finnhub_client.client import FinnhubClient
 
 
 def _news_handler(client: "FinnhubClient", args: dict) -> list[dict]:
