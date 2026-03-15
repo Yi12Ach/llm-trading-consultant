@@ -23,8 +23,8 @@ _DISPATCH: dict[str, Callable] = {
 }
 
 
-_MAX_NEWS_ITEMS = 5
-_MAX_SEARCH_RESULTS = 5
+_MAX_NEWS_ITEMS = 10
+_MAX_SEARCH_RESULTS = 10
 _MAX_RESULT_CHARS = 10000  # hard cap on any single tool result
 
 
