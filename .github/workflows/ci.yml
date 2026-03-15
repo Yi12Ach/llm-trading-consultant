@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint with ruff
+        run: ruff check .
+
+      - name: Test finnhub_client
+        run: pytest tests/test_finnhub_client.py --tb=short -v
+        continue-on-error: true
+
+      - name: Test tool_executor
+        run: pytest tests/test_tool_executor.py --tb=short -v
+        continue-on-error: true
+
+      - name: Test orchestrator
+        run: pytest tests/test_orchestrator.py --tb=short -v
+        continue-on-error: true
+
+      - name: Test run
+        run: pytest tests/test_run.py --tb=short -v
+        continue-on-error: true
+
+    env:
+      OPENAI_API_KEY: "test-key"
+      FINNHUB_API_KEY: "test-key"

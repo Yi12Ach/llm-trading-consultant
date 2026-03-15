@@ -1,6 +1,8 @@
 import json
 
+from app.finnhub_client.client import FinnhubError
 from app.tools.executor import execute_tool_call
+
 
 def test_execute_get_stock_quote_calls_correct_method(mock_finnhub_client):
     execute_tool_call("get_stock_quote", {"symbol": "AAPL"}, mock_finnhub_client)
@@ -55,8 +57,6 @@ def test_execute_unknown_tool_returns_error_json(mock_finnhub_client):
 
 
 def test_execute_handles_client_exception_gracefully(mock_finnhub_client):
-    from app.finnhub_client.client import FinnhubError
-
     mock_finnhub_client.get_quote.side_effect = FinnhubError("API down")
 
     result = execute_tool_call("get_stock_quote", {"symbol": "AAPL"}, mock_finnhub_client)
