@@ -24,8 +24,17 @@ jobs:
       - name: Lint with ruff
         run: ruff check .
 
-      - name: Run tests
-        run: pytest --tb=short -v
+      - name: Test finnhub_client
+        run: pytest tests/test_finnhub_client.py --tb=short -v
+
+      - name: Test tool_executor
+        run: pytest tests/test_tool_executor.py --tb=short -v
+
+      - name: Test orchestrator
+        run: pytest tests/test_orchestrator.py --tb=short -v
+
+      - name: Test run
+        run: pytest tests/test_run.py --tb=short -v
 
     env:
       OPENAI_API_KEY: "test-key"
