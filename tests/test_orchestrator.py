@@ -10,7 +10,7 @@ from app.config import Settings
 def settings():
     return Settings(
         openai_api_key="test-openai-key",
-        finnhub_api_key="test-finnhub-key",
+        finnhub_api_key="test-finnhub_client-key",
         openai_model="gpt-4o-mini",
     )
 

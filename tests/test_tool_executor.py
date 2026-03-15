@@ -55,7 +55,7 @@ def test_execute_unknown_tool_returns_error_json(mock_finnhub_client):
 
 
 def test_execute_handles_client_exception_gracefully(mock_finnhub_client):
-    from app.finnhub.client import FinnhubError
+    from app.finnhub_client.client import FinnhubError
 
     mock_finnhub_client.get_quote.side_effect = FinnhubError("API down")
 
