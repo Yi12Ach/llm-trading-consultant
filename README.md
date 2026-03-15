@@ -174,6 +174,7 @@ The following AI tools were used during the development of this project:
 
 ### Architectural
 
+- **Context window limit** — the full conversation history is sent to OpenAI on every turn. In long sessions, accumulated messages and large tool responses (e.g. news articles, financial metrics) can exceed the model's 128k token limit, resulting in a `context_length_exceeded` error. Keeping sessions shorter or clearing chat history avoids this
 - **Sequential tool execution** — when OpenAI requests multiple tool calls in one turn, they run one after another rather than in parallel, making multi-stock queries slower
 - **No caching** — every question hits the Finnhub API fresh, even if the same stock data was already fetched moments ago in the same session
 - **No retry/backoff logic** — if Finnhub returns an error, the tool executor returns it as-is with no retry attempt
