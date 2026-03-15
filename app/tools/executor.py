@@ -23,6 +23,17 @@ _DISPATCH: dict[str, Callable] = {
 }
 
 
+_MAX_NEWS_ITEMS = 10
+_MAX_SEARCH_RESULTS = 10
+_MAX_RESULT_CHARS = 10000  # hard cap on any single tool result
+
+
+def _truncate(result: str) -> str:
+    if len(result) > _MAX_RESULT_CHARS:
+        return result[:_MAX_RESULT_CHARS] + "\n... [truncated]"
+    return result
+
+
 def execute_tool_call(tool_name: str, arguments: dict, client: "FinnhubClient") -> str:
     """Execute a named tool with the given arguments and return a JSON string result."""
     handler = _DISPATCH.get(tool_name)
@@ -30,6 +41,10 @@ def execute_tool_call(tool_name: str, arguments: dict, client: "FinnhubClient") 
         return json.dumps({"error": f"Unknown tool: {tool_name}"})
     try:
         result = handler(client, arguments)
-        return json.dumps(result)
+        if tool_name == "get_company_news" and isinstance(result, list):
+            result = result[:_MAX_NEWS_ITEMS]
+        if tool_name == "search_symbol" and isinstance(result, dict):
+            result["result"] = result.get("result", [])[:_MAX_SEARCH_RESULTS]
+        return _truncate(json.dumps(result))
     except Exception as exc:
         return json.dumps({"error": str(exc)})
