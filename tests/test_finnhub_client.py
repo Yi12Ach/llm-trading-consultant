@@ -3,12 +3,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from app.finnhub.client import FinnhubClient, FinnhubError
+from app.finnhub_client.client import FinnhubClient, FinnhubError
 
 
 @pytest.fixture
 def client_and_mock():
-    with patch("app.finnhub.client.finnhub.Client") as MockSDK:
+    with patch("app.finnhub_client.client.finnhub_client.Client") as MockSDK:
         mock_sdk = MagicMock()
         MockSDK.return_value = mock_sdk
         client = FinnhubClient(api_key="test-key")
