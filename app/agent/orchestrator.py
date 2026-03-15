@@ -2,7 +2,7 @@ import json
 
 from openai import OpenAI
 
-from app.config import Settings
+from app.config import Settings, OpenAISettings
 from app.finnhub_client.client import FinnhubClient
 from app.tools.definitions import TOOL_DEFINITIONS
 from app.tools.executor import execute_tool_call
@@ -20,8 +20,8 @@ Guidelines:
 - Keep responses concise but complete. Use bullet points or short tables for comparisons.
 - Prices are in USD unless otherwise specified by the data."""
 
-_MAX_TOOLS_TO_BE_USED = 5 # 5 since this is the maximum amount of tools that we can use
-_MAX_HISTORY_MESSAGES = 20  # keep last 10 conversation turns (user+assistant pairs)
+_MAX_TOOLS_TO_BE_USED = OpenAISettings().MAX_TOOLS_TO_BE_USED # currently set to 5
+_MAX_HISTORY_MESSAGES = OpenAISettings().MAX_HISTORY_MESSAGES # currently set to 10
 _FALLBACK_RESPONSE = (
     "I wasn't able to complete the analysis. Please try rephrasing your question or "
     "check that the stock symbol is valid."
