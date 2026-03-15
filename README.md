@@ -151,3 +151,30 @@ All tests mock external API calls — no real keys required.
 | `OPENAI_API_KEY` | Your OpenAI API key |
 | `FINNHUB_API_KEY` | Your Finnhub API key |
 | `OPENAI_MODEL` | Model to use (default: `gpt-4o-mini`) |
+
+---
+
+## AI Assistants used
+
+The following AI tools were used during the development of this project:
+
+- **[Claude Code](https://claude.ai/code)** — Anthropic's CLI coding assistant, used for code generation, refactoring, and architecture decisions
+- **[ChatGPT](https://chatgpt.com)** — Used for brainstorming, drafting, and general Q&A during development
+
+---
+
+## Project Limitations
+
+### Functional
+
+- **Max 5 tool calls per turn** — the orchestrator is hardcoded to a maximum of 5 Finnhub API calls per question, so very complex multi-stock queries may get cut short
+- **Conversation history persistent** — chat history lives only in the Streamlit session; refreshing the page wipes it
+- **US-centric data** — Finnhub's free tier has limited coverage for non-US exchanges
+- **No data visualisation** — responses are text-only; no charts or graphs are rendered
+
+### Architectural
+
+- **Sequential tool execution** — when OpenAI requests multiple tool calls in one turn, they run one after another rather than in parallel, making multi-stock queries slower
+- **No caching** — every question hits the Finnhub API fresh, even if the same stock data was already fetched moments ago in the same session
+- **No retry/backoff logic** — if Finnhub returns an error, the tool executor returns it as-is with no retry attempt
+- **Tight coupling in orchestrator** — the OpenAI and Finnhub clients are instantiated directly inside `run_agent()`, making it harder to swap providers or mock in tests
