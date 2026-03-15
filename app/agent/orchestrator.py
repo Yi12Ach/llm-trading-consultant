@@ -2,7 +2,7 @@ import json
 
 from openai import OpenAI
 
-from app.config import Settings, OpenAISettings
+from app.config import OpenAISettings, Settings
 from app.finnhub_client.client import FinnhubClient
 from app.tools.definitions import TOOL_DEFINITIONS
 from app.tools.executor import execute_tool_call

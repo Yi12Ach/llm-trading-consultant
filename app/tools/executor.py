@@ -1,6 +1,7 @@
 import json
 from collections.abc import Callable
 from typing import TYPE_CHECKING
+
 from app.config import ExecutorSettings
 
 if TYPE_CHECKING:
