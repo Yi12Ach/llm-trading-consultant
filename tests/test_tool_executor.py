@@ -3,6 +3,7 @@ import json
 from app.finnhub_client.client import FinnhubError
 from app.tools.executor import execute_tool_call
 
+
 def test_execute_get_stock_quote_calls_correct_method(mock_finnhub_client):
     execute_tool_call("get_stock_quote", {"symbol": "AAPL"}, mock_finnhub_client)
     mock_finnhub_client.get_quote.assert_called_once_with("AAPL")
