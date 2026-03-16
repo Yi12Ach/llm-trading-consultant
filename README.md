@@ -89,7 +89,7 @@ OPENAI_MODEL=gpt-4o-mini
 **Step 4 — Run the app**
 
 ```bash
-streamlit run app/main.py
+PYTHONPATH=. streamlit run app/main.py
 ```
 
 Open http://localhost:8501 in your browser.
